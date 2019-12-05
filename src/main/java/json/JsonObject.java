@@ -36,7 +36,7 @@ public class JsonObject extends Json {
 
     public void add(JsonPair jsonPair) {
         boolean found = false;
-        for (int i = 0; i < pairs.size(); i++) {
+        for (int i = 0; i < pairs.size() && !found; i++) {
             JsonPair p = pairs.get(i);
             if (p.key.equals(jsonPair.key)) {
                 found = true;
