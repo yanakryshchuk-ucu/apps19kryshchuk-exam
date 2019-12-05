@@ -10,12 +10,27 @@ import java.util.List;
  */
 public class Student extends BasicStudent {
 
+    private List<Tuple<String, Integer>> exams;
+
     public Student(String name, String surname, Integer year, Tuple<String, Integer>... exams) {
-        // ToDo
+        super(name, surname, year);
+        this.exams = Arrays.asList(exams);
     }
 
     public JsonObject toJsonObject() {
+        JsonObject jsonObject = super.toJsonObject();
+        Json[] examsJsons = new Json[exams.size()];
+        for (int i = 0; i < exams.size(); i++) {
+            Integer mark = exams.get(i).value;
+            Json exam = new JsonObject(
+                    new JsonPair("course", new JsonString(exams.get(i).key)),
+                    new JsonPair("mark", new JsonNumber(mark)),
+                    new JsonPair("passed", new JsonBoolean(mark > 2))
+            );
+            examsJsons[i] = exam;
+        }
+        jsonObject.add(new JsonPair("exams", new JsonArray(examsJsons)));
         // ToDo
-        return null;
+        return jsonObject;
     }
 }
